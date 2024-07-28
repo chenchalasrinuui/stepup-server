@@ -3,8 +3,14 @@ var mongodb = require('mongodb')
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+router.get('/get-users', async function (req, res, next) {
+  const url = "mongodb+srv://stepup:stepup@stepup8am.znntnil.mongodb.net/"
+  const clinet = mongodb.MongoClient
+  const server = await clinet.connect(url)
+  const db = server.db("stepup")
+  const collection = db.collection('users')
+  const reuslt = await collection.find({}).toArray()
+  res.send(reuslt)
 });
 
 router.post('/register/:loc', async function (req, res, next) {  // receive the req
